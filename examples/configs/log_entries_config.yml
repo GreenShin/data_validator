@@ -1,0 +1,47 @@
+file_info:
+  file_type: jsonl
+  expected_rows: null
+  encoding: utf-8
+  delimiter: ","
+  has_header: true
+  json_schema: null
+  json_root_path: null
+  jsonl_array_mode: false
+
+columns:
+- name: timestamp
+  type: datetime
+  required: true
+  format: "%Y-%m-%d %H:%M:%S"
+- name: level
+  type: string
+  required: true
+  allowed_values:
+  - DEBUG
+  - INFO
+  - WARNING
+  - ERROR
+  - CRITICAL
+  case_sensitive: true
+- name: message
+  type: string
+  required: true
+  length:
+    min: 1
+    max: 500
+- name: user_id
+  type: string
+  required: false
+  pattern: "^U[0-9]{3}$"
+- name: session_id
+  type: string
+  required: false
+  pattern: "^S[0-9]{3}$"
+- name: ip_address
+  type: string
+  required: false
+  pattern: "^[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}$"
+- name: error_code
+  type: string
+  required: false
+  pattern: "^[A-Z_]+_[0-9]{3}$"

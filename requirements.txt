@@ -1,0 +1,10 @@
+# Core dependencies for CSV validation
+pandas>=1.5.0          # CSV 파일 처리
+PyYAML>=6.0            # YAML 설정 파일 파싱
+pydantic>=2.0          # 데이터 검증 및 모델링
+click>=8.0             # 명령행 인터페이스
+rich>=13.0             # 콘솔 출력 및 진행률 표시
+python-dateutil>=2.8   # 날짜/시간 처리
+email-validator>=2.0   # 이메일 형식 검증
+phonenumbers>=8.13     # 전화번호 형식 검증
+chardet>=5.0           # 문자 인코딩 감지

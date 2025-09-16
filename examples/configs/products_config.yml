@@ -1,0 +1,48 @@
+file_info:
+  file_type: csv
+  expected_rows: 10
+  encoding: utf-8
+  delimiter: ","
+  has_header: true
+
+columns:
+- name: id
+  type: integer
+  required: true
+  range:
+    min: 1
+    max: 999999
+- name: name
+  type: string
+  required: true
+  length:
+    min: 1
+    max: 100
+- name: category
+  type: string
+  required: true
+  allowed_values:
+  - 전자제품
+  - 가구
+  - 도서
+  - 문구
+  case_sensitive: false
+- name: price
+  type: integer
+  required: true
+  range:
+    min: 0
+    max: 10000000
+- name: stock
+  type: integer
+  required: true
+  range:
+    min: 0
+    max: 10000
+- name: created_date
+  type: datetime
+  required: true
+  format: "%Y-%m-%d %H:%M:%S"
+- name: is_active
+  type: boolean
+  required: true

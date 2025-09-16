@@ -1,0 +1,9 @@
+file_info:
+  expected_rows: -1  # 잘못된 값
+  encoding: "invalid-encoding"
+  delimiter: ","
+  has_header: true
+columns:
+- name: "test"
+  type: "invalid_type"  # 잘못된 타입
+  required: true

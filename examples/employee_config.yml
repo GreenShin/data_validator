@@ -1,0 +1,49 @@
+file_info:
+  expected_rows: 11 # 타이틀 행을 포함한 총 행 수
+  encoding: "utf-8"
+  delimiter: ","
+  has_header: true
+
+columns:
+  - name: "employee_id"
+    type: "string"
+    required: true
+    pattern: "^EMP\\d{3}$"
+
+  - name: "name"
+    type: "string"
+    required: true
+    length:
+      min: 2
+      max: 20
+
+  - name: "department"
+    type: "string"
+    required: true
+    allowed_values: ["개발팀", "마케팅팀", "영업팀", "인사팀"]
+    case_sensitive: false
+
+  - name: "salary"
+    type: "integer"
+    required: true
+    range:
+      min: 3000000
+      max: 10000000
+
+  - name: "hire_date"
+    type: "datetime"
+    required: true
+    format: "%Y-%m-%d"
+
+  - name: "email"
+    type: "email"
+    required: true
+
+  - name: "phone"
+    type: "string"
+    required: true
+    pattern: "^010-\\d{4}-\\d{4}$"
+
+  - name: "is_active"
+    type: "boolean"
+    required: true

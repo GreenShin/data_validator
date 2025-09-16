@@ -1,0 +1,39 @@
+file_info:
+  expected_rows: 1000
+  encoding: utf-8
+  delimiter: ','
+  has_header: true
+columns:
+- name: id
+  type: integer
+  required: true
+  range:
+    min: 1
+    max: 999999
+- name: name
+  type: string
+  required: true
+  length:
+    min: 1
+    max: 100
+- name: email
+  type: email
+  required: true
+- name: age
+  type: integer
+  required: false
+  range:
+    min: 0
+    max: 120
+- name: category
+  type: string
+  required: true
+  allowed_values:
+  - A
+  - B
+  - C
+  case_sensitive: false
+- name: created_date
+  type: datetime
+  required: true
+  format: '%Y-%m-%d %H:%M:%S'

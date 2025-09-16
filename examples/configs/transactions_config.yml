@@ -1,0 +1,67 @@
+file_info:
+  file_type: jsonl
+  expected_rows: null
+  encoding: utf-8
+  delimiter: ","
+  has_header: true
+  json_schema: null
+  json_root_path: null
+  jsonl_array_mode: false
+
+columns:
+- name: transaction_id
+  type: string
+  required: true
+  pattern: "^TXN_[0-9]{3}$"
+- name: user_id
+  type: string
+  required: true
+  pattern: "^U[0-9]{3}$"
+- name: amount
+  type: integer
+  required: true
+  range:
+    min: 0
+    max: 10000000
+- name: currency
+  type: string
+  required: true
+  allowed_values:
+  - KRW
+  - USD
+  - EUR
+  - JPY
+  case_sensitive: true
+- name: type
+  type: string
+  required: true
+  allowed_values:
+  - purchase
+  - refund
+  - transfer
+  - deposit
+  - withdrawal
+  case_sensitive: false
+- name: timestamp
+  type: datetime
+  required: true
+  format: "%Y-%m-%d %H:%M:%S"
+- name: status
+  type: string
+  required: true
+  allowed_values:
+  - pending
+  - completed
+  - failed
+  - cancelled
+  case_sensitive: false
+- name: merchant
+  type: string
+  required: true
+  length:
+    min: 1
+    max: 100
+- name: error_code
+  type: string
+  required: false
+  pattern: "^[A-Z_]+$"

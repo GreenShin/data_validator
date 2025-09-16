@@ -1,0 +1,45 @@
+file_info:
+  expected_rows: null
+  encoding: ascii
+  delimiter: ','
+  has_header: true
+columns:
+- name: id
+  type: datetime
+  required: true
+  format: '%Y-%m-%d %H:%M:%S'
+- name: name
+  type: string
+  required: true
+  length:
+    min: 3
+    max: 7
+  allowed_values:
+  - Alice
+  - Bob
+  - Charlie
+  - Diana
+  - Eve
+  case_sensitive: false
+- name: email
+  type: email
+  required: true
+- name: age
+  type: datetime
+  required: true
+  format: '%Y-%m-%d %H:%M:%S'
+- name: category
+  type: string
+  required: true
+  length:
+    min: 1
+    max: 1
+  allowed_values:
+  - A
+  - B
+  - C
+  case_sensitive: false
+- name: created_date
+  type: datetime
+  required: true
+  format: '%Y-%m-%d %H:%M:%S'

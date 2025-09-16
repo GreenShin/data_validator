@@ -1,0 +1,57 @@
+file_info:
+  expected_rows: null
+  encoding: utf-8
+  delimiter: ','
+  has_header: true
+columns:
+- name: customer_id
+  type: datetime
+  required: true
+  format: '%Y-%m-%d %H:%M:%S'
+- name: name
+  type: string
+  required: true
+  length:
+    min: 3
+    max: 3
+  allowed_values:
+  - 김철수
+  - 이영희
+  - 박민수
+  - 최지영
+  - 정수현
+  - 한소영
+  - 윤태호
+  - 송미경
+  - 임동훈
+  - 강서연
+  case_sensitive: false
+- name: email
+  type: email
+  required: true
+- name: age
+  type: datetime
+  required: true
+  format: '%Y-%m-%d %H:%M:%S'
+- name: phone
+  type: string
+  required: true
+  length:
+    min: 13
+    max: 13
+  allowed_values:
+  - 010-1234-5678
+  - 010-2345-6789
+  - 010-3456-7890
+  - 010-4567-8901
+  - 010-5678-9012
+  - 010-6789-0123
+  - 010-7890-1234
+  - 010-8901-2345
+  - 010-9012-3456
+  - 010-0123-4567
+  case_sensitive: false
+- name: join_date
+  type: datetime
+  required: true
+  format: '%Y-%m-%d %H:%M:%S'

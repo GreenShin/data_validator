@@ -1,0 +1,11 @@
+id,name,email,age,department
+1,김철수,kim@company.com,30,개발팀
+2,이영희,invalid-email,25,마케팅팀
+3,박민수,park@company.com,150,영업팀
+4,최지영,choi@company.com,28,잘못된부서
+5,정수현,jung@company.com,32,인사팀
+6,한소영,han@company.com,27,개발팀
+7,윤태호,yoon@company.com,29,마케팅팀
+8,송미경,song@company.com,31,영업팀
+9,임동훈,lim@company.com,26,인사팀
+10,강서연,kang@company.com,33,개발팀

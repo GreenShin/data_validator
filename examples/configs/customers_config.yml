@@ -1,0 +1,64 @@
+file_info:
+  file_type: csv
+  expected_rows: 10
+  encoding: utf-8
+  delimiter: ","
+  has_header: true
+
+columns:
+- name: customer_id
+  type: string
+  required: true
+  pattern: "^C[0-9]{3}$"
+- name: name
+  type: string
+  required: true
+  length:
+    min: 1
+    max: 50
+- name: email
+  type: email
+  required: true
+- name: phone
+  type: string
+  required: true
+  pattern: "^010-[0-9]{4}-[0-9]{4}$"
+- name: age
+  type: integer
+  required: true
+  range:
+    min: 18
+    max: 100
+- name: city
+  type: string
+  required: true
+  allowed_values:
+  - 서울
+  - 부산
+  - 대구
+  - 인천
+  - 광주
+  - 대전
+  - 울산
+  - 세종
+  - 수원
+  - 고양
+  case_sensitive: false
+- name: country
+  type: string
+  required: true
+  allowed_values:
+  - 한국
+  case_sensitive: false
+- name: registration_date
+  type: datetime
+  required: true
+  format: "%Y-%m-%d %H:%M:%S"
+- name: status
+  type: string
+  required: true
+  allowed_values:
+  - active
+  - inactive
+  - suspended
+  case_sensitive: false

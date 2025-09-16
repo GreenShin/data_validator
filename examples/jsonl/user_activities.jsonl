@@ -1,0 +1,10 @@
+{"user_id": "U001", "action": "login", "timestamp": "2024-01-24 09:00:00", "device": "desktop", "browser": "Chrome", "location": {"city": "Seoul", "country": "KR"}}
+{"user_id": "U001", "action": "view_product", "timestamp": "2024-01-24 09:05:30", "device": "desktop", "browser": "Chrome", "product_id": "P001", "location": {"city": "Seoul", "country": "KR"}}
+{"user_id": "U001", "action": "add_to_cart", "timestamp": "2024-01-24 09:08:15", "device": "desktop", "browser": "Chrome", "product_id": "P001", "quantity": 1, "location": {"city": "Seoul", "country": "KR"}}
+{"user_id": "U001", "action": "checkout", "timestamp": "2024-01-24 09:12:45", "device": "desktop", "browser": "Chrome", "total_amount": 1200000, "payment_method": "credit_card", "location": {"city": "Seoul", "country": "KR"}}
+{"user_id": "U001", "action": "purchase_complete", "timestamp": "2024-01-24 09:15:20", "device": "desktop", "browser": "Chrome", "order_id": "ORD-001", "total_amount": 1200000, "location": {"city": "Seoul", "country": "KR"}}
+{"user_id": "U002", "action": "login", "timestamp": "2024-01-24 09:20:00", "device": "mobile", "browser": "Safari", "location": {"city": "Busan", "country": "KR"}}
+{"user_id": "U002", "action": "search", "timestamp": "2024-01-24 09:22:10", "device": "mobile", "browser": "Safari", "search_term": "wireless mouse", "location": {"city": "Busan", "country": "KR"}}
+{"user_id": "U002", "action": "view_product", "timestamp": "2024-01-24 09:25:30", "device": "mobile", "browser": "Safari", "product_id": "P002", "location": {"city": "Busan", "country": "KR"}}
+{"user_id": "U002", "action": "add_to_cart", "timestamp": "2024-01-24 09:28:45", "device": "mobile", "browser": "Safari", "product_id": "P002", "quantity": 2, "location": {"city": "Busan", "country": "KR"}}
+{"user_id": "U002", "action": "logout", "timestamp": "2024-01-24 09:35:00", "device": "mobile", "browser": "Safari", "location": {"city": "Busan", "country": "KR"}}

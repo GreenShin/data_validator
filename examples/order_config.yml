@@ -1,0 +1,46 @@
+file_info:
+  expected_rows: 11 # 타이틀 행을 포함한 총 행 수
+  encoding: "utf-8"
+  delimiter: ";"
+  has_header: true
+
+columns:
+  - name: "order_id"
+    type: "string"
+    required: true
+    pattern: "^ORD\\d{3}$"
+
+  - name: "customer_id"
+    type: "string"
+    required: true
+    pattern: "^CUST\\d{3}$"
+
+  - name: "product_code"
+    type: "string"
+    required: true
+    pattern: "^PROD\\d{3}$"
+
+  - name: "quantity"
+    type: "integer"
+    required: true
+    range:
+      min: 1
+      max: 100
+
+  - name: "unit_price"
+    type: "integer"
+    required: true
+    range:
+      min: 1000
+      max: 1000000
+
+  - name: "order_date"
+    type: "datetime"
+    required: true
+    format: "%Y-%m-%d %H:%M:%S"
+
+  - name: "status"
+    type: "string"
+    required: true
+    allowed_values: ["pending", "shipped", "completed", "cancelled"]
+    case_sensitive: false

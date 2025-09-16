@@ -1,0 +1,141 @@
+file_info:
+  file_type: json
+  expected_rows: null
+  encoding: ascii
+  delimiter: ','
+  has_header: true
+  json_schema: null
+  json_root_path: null
+  jsonl_array_mode: false
+columns:
+- name: id
+  type: datetime
+  required: true
+  format: '%Y-%m-%d %H:%M:%S'
+- name: username
+  type: string
+  required: true
+  length:
+    min: 8
+    max: 10
+  allowed_values:
+  - john_doe
+  - jane_smith
+  - bob_wilson
+  case_sensitive: false
+- name: email
+  type: email
+  required: true
+- name: profile.first_name
+  type: string
+  required: true
+  length:
+    min: 3
+    max: 4
+  allowed_values:
+  - John
+  - Jane
+  - Bob
+  case_sensitive: false
+- name: profile.last_name
+  type: string
+  required: true
+  length:
+    min: 3
+    max: 6
+  allowed_values:
+  - Doe
+  - Smith
+  - Wilson
+  case_sensitive: false
+- name: profile.age
+  type: datetime
+  required: true
+  format: '%Y-%m-%d %H:%M:%S'
+- name: profile.city
+  type: string
+  required: true
+  length:
+    min: 5
+    max: 5
+  allowed_values:
+  - Seoul
+  - Busan
+  - Daegu
+  case_sensitive: false
+- name: profile.country
+  type: string
+  required: true
+  length:
+    min: 11
+    max: 11
+- name: preferences.theme
+  type: string
+  required: true
+  length:
+    min: 4
+    max: 5
+  allowed_values:
+  - dark
+  - light
+  - auto
+  case_sensitive: false
+- name: preferences.language
+  type: string
+  required: true
+  length:
+    min: 2
+    max: 2
+  allowed_values:
+  - ko
+  - en
+  case_sensitive: false
+- name: preferences.notifications
+  type: integer
+  required: true
+  range:
+    min: 0
+    max: 1
+- name: created_at
+  type: datetime
+  required: true
+  format: '%Y-%m-%d %H:%M:%S'
+- name: is_active
+  type: integer
+  required: true
+  range:
+    min: 0
+    max: 1
+- name: tags[0]
+  type: string
+  required: true
+  length:
+    min: 7
+    max: 9
+  allowed_values:
+  - developer
+  - designer
+  - manager
+  case_sensitive: false
+- name: tags[1]
+  type: string
+  required: true
+  length:
+    min: 2
+    max: 7
+  allowed_values:
+  - python
+  - ui
+  - product
+  case_sensitive: false
+- name: tags[2]
+  type: string
+  required: true
+  length:
+    min: 7
+    max: 8
+  allowed_values:
+  - backend
+  - frontend
+  - strategy
+  case_sensitive: false

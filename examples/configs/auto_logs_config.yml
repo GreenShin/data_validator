@@ -1,0 +1,88 @@
+file_info:
+  file_type: jsonl
+  expected_rows: null
+  encoding: ascii
+  delimiter: ' '
+  has_header: true
+  json_schema: null
+  json_root_path: null
+  jsonl_array_mode: false
+columns:
+- name: timestamp
+  type: datetime
+  required: true
+  format: '%Y-%m-%d %H:%M:%S'
+- name: level
+  type: string
+  required: true
+  length:
+    min: 4
+    max: 7
+  allowed_values:
+  - INFO
+  - DEBUG
+  - WARNING
+  - ERROR
+  case_sensitive: false
+- name: message
+  type: string
+  required: true
+  length:
+    min: 11
+    max: 31
+  allowed_values:
+  - Application started
+  - Database connection established
+  - User login successful
+  - High memory usage detected
+  - Failed to process payment
+  - User logout
+  - New user registration
+  - Cache updated
+  - Data backup completed
+  - Database connection lost
+  case_sensitive: false
+- name: user_id
+  type: string
+  required: true
+  length:
+    min: 4
+    max: 4
+  allowed_values:
+  - U001
+  - U002
+  - U003
+  case_sensitive: false
+- name: session_id
+  type: string
+  required: true
+  length:
+    min: 4
+    max: 4
+  allowed_values:
+  - S001
+  - S002
+  - S003
+  case_sensitive: false
+- name: ip_address
+  type: string
+  required: true
+  length:
+    min: 11
+    max: 13
+  allowed_values:
+  - 192.168.1.100
+  - 192.168.1.101
+  - 192.168.1.102
+  - 192.168.1.1
+  case_sensitive: false
+- name: error_code
+  type: string
+  required: true
+  length:
+    min: 6
+    max: 7
+  allowed_values:
+  - PAY_001
+  - DB_001
+  case_sensitive: false

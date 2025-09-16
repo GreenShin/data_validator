@@ -1,0 +1,62 @@
+file_info:
+  file_type: json
+  expected_rows: null
+  encoding: utf-8
+  delimiter: ","
+  has_header: true
+  json_schema:
+    type: object
+    properties:
+      store_info:
+        type: object
+      orders:
+        type: array
+    required:
+    - store_info
+    - orders
+  json_root_path: orders
+  jsonl_array_mode: false
+
+columns:
+- name: order_id
+  type: string
+  required: true
+  pattern: "^ORD-[0-9]{3}$"
+- name: customer
+  type: object
+  required: true
+- name: items
+  type: array
+  required: true
+- name: order_date
+  type: datetime
+  required: true
+  format: "%Y-%m-%d %H:%M:%S"
+- name: status
+  type: string
+  required: true
+  allowed_values:
+  - pending
+  - processing
+  - shipped
+  - completed
+  - cancelled
+  case_sensitive: false
+- name: total_amount
+  type: integer
+  required: true
+  range:
+    min: 0
+    max: 10000000
+- name: payment_method
+  type: string
+  required: true
+  allowed_values:
+  - credit_card
+  - bank_transfer
+  - cash
+  - paypal
+  case_sensitive: false
+- name: shipping_address
+  type: object
+  required: true

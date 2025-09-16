@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  csv-validator:
+    build: .
+    container_name: csv-validator
+    volumes:
+      - ./data:/app/data
+      - ./results:/app/results
+      - ./examples:/app/examples
+    environment:
+      - PYTHONPATH=/app
+      - CSV_VALIDATOR_DATA_DIR=/app/data
+      - CSV_VALIDATOR_RESULTS_DIR=/app/results
+    command: ["python", "-m", "src.main", "--help"]
+    
+  # 개발 환경용 서비스
+  csv-validator-dev:
+    build: .
+    container_name: csv-validator-dev
+    volumes:
+      - .:/app
+      - ./data:/app/data
+      - ./results:/app/results
+    environment:
+      - PYTHONPATH=/app
+      - CSV_VALIDATOR_DATA_DIR=/app/data
+      - CSV_VALIDATOR_RESULTS_DIR=/app/results
+    command: ["python", "-m", "src.main", "--help"]
+    profiles:
+      - dev

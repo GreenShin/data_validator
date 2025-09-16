@@ -1,0 +1,59 @@
+file_info:
+  file_type: csv
+  expected_rows: null
+  encoding: utf-8
+  delimiter: ','
+  has_header: true
+columns:
+- name: id
+  type: datetime
+  required: true
+  format: '%Y-%m-%d %H:%M:%S'
+- name: name
+  type: string
+  required: true
+  length:
+    min: 1
+    max: 3
+  allowed_values:
+  - 노트북
+  - 마우스
+  - 키보드
+  - 모니터
+  - 헤드폰
+  - 책상
+  - 의자
+  - 스탠드
+  - 책
+  - 펜
+  case_sensitive: false
+- name: category
+  type: string
+  required: true
+  length:
+    min: 2
+    max: 4
+  allowed_values:
+  - 전자제품
+  - 가구
+  - 도서
+  - 문구
+  case_sensitive: false
+- name: price
+  type: datetime
+  required: true
+  format: '%Y-%m-%d %H:%M:%S'
+- name: stock
+  type: datetime
+  required: true
+  format: '%Y-%m-%d %H:%M:%S'
+- name: created_date
+  type: datetime
+  required: true
+  format: '%Y-%m-%d %H:%M:%S'
+- name: is_active
+  type: integer
+  required: true
+  range:
+    min: 1
+    max: 1

@@ -1,0 +1,5 @@
+{"timestamp": "2024-01-24 09:00:00", "level": "INFO", "message": "Application started", "user_id": "U001", "session_id": "S001", "ip_address": "192.168.1.100"}
+{"timestamp": "invalid-date", "level": "DEBUG", "message": "Database connection established", "user_id": "U001", "session_id": "S001", "ip_address": "192.168.1.100"}
+{"timestamp": "2024-01-24 09:02:30", "level": "INVALID_LEVEL", "message": "User login successful", "user_id": "U001", "session_id": "S001", "ip_address": "192.168.1.100"}
+{"timestamp": "2024-01-24 09:05:45", "level": "WARNING", "message": "", "user_id": "U001", "session_id": "S001", "ip_address": "192.168.1.100"}
+{"timestamp": "2024-01-24 09:10:20", "level": "ERROR", "message": "Failed to process payment", "user_id": "U002", "session_id": "S002", "ip_address": "invalid-ip", "error_code": "PAY_001"}

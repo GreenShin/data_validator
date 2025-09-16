@@ -1,0 +1,10 @@
+{"sensor_id": "TEMP_001", "timestamp": "2024-01-24 09:00:00", "value": 23.5, "unit": "celsius", "location": "room_a", "status": "normal"}
+{"sensor_id": "HUM_001", "timestamp": "2024-01-24 09:00:00", "value": 45.2, "unit": "percent", "location": "room_a", "status": "normal"}
+{"sensor_id": "PRESS_001", "timestamp": "2024-01-24 09:00:00", "value": 1013.2, "unit": "hPa", "location": "room_a", "status": "normal"}
+{"sensor_id": "TEMP_001", "timestamp": "2024-01-24 09:05:00", "value": 24.1, "unit": "celsius", "location": "room_a", "status": "normal"}
+{"sensor_id": "HUM_001", "timestamp": "2024-01-24 09:05:00", "value": 46.8, "unit": "percent", "location": "room_a", "status": "normal"}
+{"sensor_id": "PRESS_001", "timestamp": "2024-01-24 09:05:00", "value": 1012.8, "unit": "hPa", "location": "room_a", "status": "normal"}
+{"sensor_id": "TEMP_002", "timestamp": "2024-01-24 09:00:00", "value": 22.8, "unit": "celsius", "location": "room_b", "status": "normal"}
+{"sensor_id": "HUM_002", "timestamp": "2024-01-24 09:00:00", "value": 42.1, "unit": "percent", "location": "room_b", "status": "normal"}
+{"sensor_id": "PRESS_002", "timestamp": "2024-01-24 09:00:00", "value": 1013.5, "unit": "hPa", "location": "room_b", "status": "normal"}
+{"sensor_id": "TEMP_002", "timestamp": "2024-01-24 09:05:00", "value": 23.2, "unit": "celsius", "location": "room_b", "status": "normal"}
