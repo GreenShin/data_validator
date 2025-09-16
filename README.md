@@ -1,7 +1,7 @@
 # 데이터 파일 구문정확성 검증 프로그램
 
 [![Python Version](https://img.shields.io/badge/python-3.8+-blue.svg)](https://python.org)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/status-stable-brightgreen.svg)]()
 
 CSV, JSON, JSONL 파일의 구문정확성을 자동으로 검증하고 상세한 결과 리포트를 생성하는 Python 프로그램입니다.
@@ -451,7 +451,7 @@ python -m pytest tests/ --cov=src
 
 ## 📄 라이선스
 
-이 프로젝트는 MIT 라이선스 하에 배포됩니다. 자세한 내용은 [LICENSE](LICENSE) 파일을 참조하세요.
+이 프로젝트는 Apache 2.0 라이선스 하에 배포됩니다. 자세한 내용은 [LICENSE](LICENSE) 파일을 참조하세요.
 
 ## 📞 지원
 
