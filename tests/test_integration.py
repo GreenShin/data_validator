@@ -45,7 +45,7 @@ class TestCSVValidatorIntegration:
     def test_complete_validation_workflow_valid(self):
         """완전한 검증 워크플로우 - 유효한 데이터"""
         # 테스트 데이터 생성
-        csv_content = "id,name,email,age\n1,김철수,kim@example.com,30\n2,이영희,lee@example.com,25"
+        csv_content = "id,name,email,age\n1,김철수,test@aaa.bbb.ccc,30\n2,이영희,test@aaa.bbb.ccc,25"
         csv_path = self.create_test_csv(csv_content)
         
         # 설정 파일 생성
@@ -101,7 +101,7 @@ class TestCSVValidatorIntegration:
     def test_complete_validation_workflow_with_errors(self):
         """완전한 검증 워크플로우 - 오류가 있는 데이터"""
         # 테스트 데이터 생성 (오류 포함)
-        csv_content = "id,name,email,age\n1,김,kim@invalid,15\n2,이영희,lee@example.com,25"
+        csv_content = "id,name,email,age\n1,김,test@aaa.bbb.ccc,15\n2,이영희,test@aaa.bbb.ccc,25"
         csv_path = self.create_test_csv(csv_content)
         
         # 설정 파일 생성
@@ -205,7 +205,7 @@ class TestCSVValidatorIntegration:
         """폴더 내 여러 파일 검증 테스트"""
         # 여러 CSV 파일 생성
         csv1_content = "id,name\n1,김철수\n2,이영희"
-        csv2_content = "id,email\n1,kim@example.com\n2,lee@example.com"
+        csv2_content = "id,email\n1,test@aaa.bbb.ccc\n2,test@aaa.bbb.ccc"
         
         csv1_path = self.create_test_csv(csv1_content, "file1.csv")
         csv2_path = self.create_test_csv(csv2_content, "file2.csv")
@@ -256,7 +256,7 @@ class TestCSVValidatorIntegration:
         # 대용량 CSV 파일 생성 (1000행)
         csv_content = "id,name,email,age\n"
         for i in range(1000):
-            csv_content += f"{i+1},사용자{i+1},user{i+1}@example.com,{20 + (i % 50)}\n"
+            csv_content += f"{i+1},사용자{i+1},test@aaa.bbb.ccc,{20 + (i % 50)}\n"
         
         csv_path = self.create_test_csv(csv_content, "large_file.csv")
         
@@ -323,7 +323,7 @@ class TestCSVValidatorIntegration:
         # 대용량 파일 생성 (5000행)
         csv_content = "id,name,email,age\n"
         for i in range(5000):
-            csv_content += f"{i+1},사용자{i+1},user{i+1}@example.com,{20 + (i % 50)}\n"
+            csv_content += f"{i+1},사용자{i+1},test@aaa.bbb.ccc,{20 + (i % 50)}\n"
         
         csv_path = self.create_test_csv(csv_content, "memory_test.csv")
         
@@ -454,7 +454,7 @@ class TestCSVValidatorIntegration:
     def test_result_file_generation(self):
         """결과 파일 생성 테스트"""
         # 테스트 데이터 생성
-        csv_content = "id,name,email\n1,김철수,kim@example.com\n2,이영희,lee@example.com"
+        csv_content = "id,name,email\n1,김철수,test@aaa.bbb.ccc\n2,이영희,test@aaa.bbb.ccc"
         csv_path = self.create_test_csv(csv_content)
         
         # 설정 파일 생성

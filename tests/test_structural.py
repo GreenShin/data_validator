@@ -33,7 +33,7 @@ class TestStructuralValidator:
     
     def test_validate_csv_format_valid(self):
         """유효한 CSV 포맷 검증 테스트"""
-        csv_content = "name,age,email\n김철수,30,kim@example.com\n이영희,25,lee@example.com"
+        csv_content = "name,age,email\n김철수,30,test@aaa.bbb.ccc\n이영희,25,test@aaa.bbb.ccc"
         file_path = self.create_test_csv(csv_content)
         
         file_info = FileInfo(
@@ -49,7 +49,7 @@ class TestStructuralValidator:
     
     def test_validate_csv_format_invalid_delimiter(self):
         """잘못된 구분자 검증 테스트"""
-        csv_content = "name;age;email\n김철수;30;kim@example.com\n이영희;25;lee@example.com"
+        csv_content = "name;age;email\n김철수;30;test@aaa.bbb.ccc\n이영희;25;test@aaa.bbb.ccc"
         file_path = self.create_test_csv(csv_content)
         
         file_info = FileInfo(
@@ -107,7 +107,7 @@ class TestStructuralValidator:
     
     def test_validate_delimiter_comma(self):
         """쉼표 구분자 검증 테스트"""
-        csv_content = "name,age,email\n김철수,30,kim@example.com"
+        csv_content = "name,age,email\n김철수,30,test@aaa.bbb.ccc"
         file_path = self.create_test_csv(csv_content)
         
         is_valid = self.validator.validate_delimiter(file_path, ",")
@@ -115,7 +115,7 @@ class TestStructuralValidator:
     
     def test_validate_delimiter_semicolon(self):
         """세미콜론 구분자 검증 테스트"""
-        csv_content = "name;age;email\n김철수;30;kim@example.com"
+        csv_content = "name;age;email\n김철수;30;test@aaa.bbb.ccc"
         file_path = self.create_test_csv(csv_content)
         
         is_valid = self.validator.validate_delimiter(file_path, ";")
@@ -123,7 +123,7 @@ class TestStructuralValidator:
     
     def test_validate_delimiter_tab(self):
         """탭 구분자 검증 테스트"""
-        csv_content = "name\tage\temail\n김철수\t30\tkim@example.com"
+        csv_content = "name\tage\temail\n김철수\t30\ttest@aaa.bbb.ccc"
         file_path = self.create_test_csv(csv_content)
         
         is_valid = self.validator.validate_delimiter(file_path, "\t")
@@ -131,7 +131,7 @@ class TestStructuralValidator:
     
     def test_validate_header_with_header(self):
         """헤더가 있는 경우 검증 테스트"""
-        csv_content = "name,age,email\n김철수,30,kim@example.com\n이영희,25,lee@example.com"
+        csv_content = "name,age,email\n김철수,30,test@aaa.bbb.ccc\n이영희,25,test@aaa.bbb.ccc"
         file_path = self.create_test_csv(csv_content)
         
         file_info = FileInfo(
@@ -164,7 +164,7 @@ class TestStructuralValidator:
     
     def test_validate_consistency_valid(self):
         """일관성 있는 CSV 파일 검증 테스트"""
-        csv_content = "name,age,email\n김철수,30,kim@example.com\n이영희,25,lee@example.com"
+        csv_content = "name,age,email\n김철수,30,test@aaa.bbb.ccc\n이영희,25,test@aaa.bbb.ccc"
         file_path = self.create_test_csv(csv_content)
         
         file_info = FileInfo(
@@ -179,7 +179,7 @@ class TestStructuralValidator:
     
     def test_validate_consistency_inconsistent_columns(self):
         """컬럼 수가 일관성 없는 CSV 파일 검증 테스트"""
-        csv_content = "name,age,email\n김철수,30\n이영희,25,lee@example.com,extra"  # 컬럼 수 불일치
+        csv_content = "name,age,email\n김철수,30\n이영희,25,test@aaa.bbb.ccc,extra"  # 컬럼 수 불일치
         file_path = self.create_test_csv(csv_content)
         
         file_info = FileInfo(
@@ -195,7 +195,7 @@ class TestStructuralValidator:
     
     def test_validate_all_comprehensive(self):
         """전체 구조 검증 테스트"""
-        csv_content = "name,age,email\n김철수,30,kim@example.com\n이영희,25,lee@example.com"
+        csv_content = "name,age,email\n김철수,30,test@aaa.bbb.ccc\n이영희,25,test@aaa.bbb.ccc"
         file_path = self.create_test_csv(csv_content)
         
         file_info = FileInfo(

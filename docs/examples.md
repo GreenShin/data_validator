@@ -44,9 +44,9 @@ python -m src.main validate -c my_first_config.yml -i your_data.csv --format htm
 **CSV 파일 구조**:
 ```csv
 customer_id,name,email,age,phone,join_date
-1,김철수,kim@example.com,30,010-1234-5678,2023-01-15
-2,이영희,lee@example.com,25,010-2345-6789,2023-02-20
-3,박민수,park@example.com,35,010-3456-7890,2023-03-10
+1,김철수,test@aaa.bbb.ccc,30,010-1234-5679,2023-01-15
+2,이영희,test@aaa.bbb.ccc,25,010-1234-5679,2023-02-20
+3,박민수,test@aaa.bbb.ccc,35,010-1234-5679,2023-03-10
 ```
 
 **설정 파일** (`customer_config.yml`):

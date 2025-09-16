@@ -387,7 +387,7 @@ custom_rule = ValidationRule(
 
 # 검증 실행
 validator = FormatValidator()
-is_valid = validator.validate_all("010-1234-5678", custom_rule)
+is_valid = validator.validate_all("010-1234-5679", custom_rule)
 
 if is_valid:
     print("✅ 유효한 전화번호")

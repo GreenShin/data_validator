@@ -132,7 +132,7 @@ class TestFormatValidator:
             required=True
         )
         
-        is_valid = self.validator._validate_email("test@example.com", rule)
+        is_valid = self.validator._validate_email("test@aaa.bbb.ccc", rule)
         assert is_valid == True
         assert len(self.validator.errors) == 0
     
@@ -157,7 +157,7 @@ class TestFormatValidator:
             required=True
         )
         
-        is_valid = self.validator._validate_phone("010-1234-5678", rule)
+        is_valid = self.validator._validate_phone("010-1234-5679", rule)
         assert is_valid == True
         assert len(self.validator.errors) == 0
     
