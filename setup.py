@@ -31,13 +31,13 @@ setup(
     name="csv-validator",
     version="0.1.0",
     author="CSV Validator Team",
-    author_email="validator@example.com",
+    author_email="greenshin.kr@gmail.com",
     description="CSV 파일의 구문정확성을 검증하는 Python 도구",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/example/csv-validator",
+    url="https://github.com/GreenShin/data_validator",
     project_urls={
-        "Bug Tracker": "https://github.com/example/csv-validator/issues",
+        "Bug Tracker": "https://github.com/GreenShin/data_validator/issues",
         "Documentation": "https://csv-validator.readthedocs.io",
     },
     classifiers=[

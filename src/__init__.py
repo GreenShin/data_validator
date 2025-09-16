@@ -7,5 +7,5 @@ CSV 파일의 구문정확성을 검증하는 Python 패키지입니다.
 
 __version__ = "0.1.0"
 __author__ = "CSV Validator Team"
-__email__ = "validator@example.com"
+__email__ = "greenshin.kr@gmail.com"
 __description__ = "CSV 파일 구문정확성 검증 도구"

@@ -455,9 +455,9 @@ python -m pytest tests/ --cov=src
 
 ## 📞 지원
 
-- **이슈 리포트**: [GitHub Issues](https://github.com/your-repo/issues)
+- **이슈 리포트**: [GitHub Issues](https://github.com/GreenShin/data_validator/issues)
 - **문서**: [API 문서](docs/API.md), [사용 예제](docs/examples.md)
-- **이메일**: support@example.com
+- **이메일**: greenshin.kr@gmail.com
 
 ## 🏆 성능 지표
 

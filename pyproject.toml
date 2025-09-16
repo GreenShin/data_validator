@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "Apache-2.0"}
 authors = [
-    {name = "CSV Validator Team", email = "validator@example.com"},
+    {name = "CSV Validator Team", email = "greenshin.kr@gmail.com"},
 ]
 keywords = ["csv", "validation", "data-quality", "syntax-check"]
 classifiers = [
@@ -52,10 +52,10 @@ dev = [
 csv-validator = "src.main:main"
 
 [project.urls]
-Homepage = "https://github.com/example/csv-validator"
-Repository = "https://github.com/example/csv-validator"
+Homepage = "https://github.com/GreenShin/data_validator"
+Repository = "https://github.com/GreenShin/data_validator"
 Documentation = "https://csv-validator.readthedocs.io"
-"Bug Tracker" = "https://github.com/example/csv-validator/issues"
+"Bug Tracker" = "https://github.com/GreenShin/data_validator/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]
