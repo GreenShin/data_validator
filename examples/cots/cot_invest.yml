@@ -6,7 +6,7 @@ file_info:
   has_header: true
 
 columns:
-  - name: "번호"
+  - name: 번호
     type: integer
     required: true
   - name: "구분(증권/보험)"
@@ -20,15 +20,11 @@ columns:
   - name: "질의자 성별"
     type: string
     required: true
-    allowed_values: ["남성", "여성", "-"]
+    allowed_values: ["남성", "여성"]
 
 distribution_analysis:
   enabled: true
   columns:
-    - name: "번호"
-      type: numerical
-      auto_bins: true
-      bin_count: 10
     - name: "구분(증권/보험)"
       type: categorical
       max_categories: 2

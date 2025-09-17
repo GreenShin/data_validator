@@ -53,7 +53,7 @@ distribution_analysis:
       bins: [0, 30000, 50000, 75000, 100000, 150000, 200000, 500000, 1000000]
     - name: city
       type: categorical
-      max_categories: 5
+      max_categories: 6
     - name: education
       type: categorical
       max_categories: 4
