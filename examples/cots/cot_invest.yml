@@ -1,0 +1,40 @@
+file_info:
+  file_type: csv
+  expected_rows: 1000
+  encoding: utf-8
+  delimiter: ","
+  has_header: true
+
+columns:
+  - name: "번호"
+    type: integer
+    required: true
+  - name: "구분(증권/보험)"
+    type: string
+    required: true
+    allowed_values: ["증권", "보험"]
+  - name: "질문구성 유형"
+    type: string
+    required: true
+    allowed_values: ["고객 특성 강조형", "투자성향 및 조건 기반형", "상품비교 추천형"]
+  - name: "질의자 성별"
+    type: string
+    required: true
+    allowed_values: ["남성", "여성", "-"]
+
+distribution_analysis:
+  enabled: true
+  columns:
+    - name: "번호"
+      type: numerical
+      auto_bins: true
+      bin_count: 10
+    - name: "구분(증권/보험)"
+      type: categorical
+      max_categories: 2
+    - name: "질문구성 유형"
+      type: categorical
+      max_categories: 3
+    - name: "질의자 성별"
+      type: categorical
+      max_categories: 3

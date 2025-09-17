@@ -305,16 +305,23 @@ class StructuralValidator:
 
             # 컬럼 수 확인
             if len(header_row) != len(expected_columns):
-                error = ValidationError(
-                    row_number=1,
-                    column_name="header",
-                    error_type=ErrorType.STRUCTURAL_INVALID_FORMAT.value,
-                    actual_value=f"{len(header_row)}개 컬럼",
-                    expected_value=f"{len(expected_columns)}개 컬럼",
-                    message=f"예상 컬럼 수({len(expected_columns)})와 실제 컬럼 수({len(header_row)})가 일치하지 않습니다",
-                )
-                self.errors.append(error)
-                return False
+                if len(header_row) < len(expected_columns):
+                    # 실제 컬럼 수가 설정된 컬럼 수보다 적으면 오류
+                    error = ValidationError(
+                        row_number=1,
+                        column_name="header",
+                        error_type=ErrorType.STRUCTURAL_INVALID_FORMAT.value,
+                        actual_value=f"{len(header_row)}개 컬럼",
+                        expected_value=f"{len(expected_columns)}개 컬럼",
+                        message=f"예상 컬럼 수({len(expected_columns)})보다 실제 컬럼 수({len(header_row)})가 적습니다",
+                    )
+                    self.errors.append(error)
+                    return False
+                else:
+                    # 실제 컬럼 수가 설정된 컬럼 수보다 많으면 경고만 표시
+                    from ..utils.logger import Logger
+                    logger = Logger()
+                    logger.warning(f"실제 컬럼 수({len(header_row)})가 설정된 컬럼 수({len(expected_columns)})보다 많습니다. 추가 컬럼은 무시됩니다.")
 
             # 컬럼명 확인
             for i, (actual, expected) in enumerate(zip(header_row, expected_columns)):
