@@ -38,6 +38,7 @@ class ReportFormatter:
             error_table = self._format_error_table(result.errors)
             statistics = self._format_statistics(result)
             recommendations = self._format_recommendations(result)
+            distribution_analysis = self._format_distribution_analysis(result)
 
             # 전체 리포트 조합
             report = f"""# 📊 CSV 구문정확성 검증 결과
@@ -55,6 +56,8 @@ class ReportFormatter:
 {error_table}
 
 {statistics}
+
+{distribution_analysis}
 
 {recommendations}
 
@@ -157,6 +160,8 @@ class ReportFormatter:
                     </div>
                 </div>
                 
+                {self._format_distribution_analysis_html(result)}
+                
                 <div class="recommendations">
                     <h3><span class="emoji">💡</span> 권장사항</h3>
                     {self._format_recommendations_html(result)}
@@ -212,6 +217,19 @@ class ReportFormatter:
                     "overall_valid": result.structural_valid and result.format_valid,
                 },
             }
+            
+            # 분포 분석 결과가 있으면 추가
+            if result.distribution_analysis:
+                # Pydantic 모델을 딕셔너리로 변환
+                distribution_dict = {}
+                for column_name, analysis_result in result.distribution_analysis.items():
+                    if hasattr(analysis_result, 'dict'):
+                        distribution_dict[column_name] = analysis_result.dict()
+                    elif hasattr(analysis_result, 'model_dump'):
+                        distribution_dict[column_name] = analysis_result.model_dump()
+                    else:
+                        distribution_dict[column_name] = str(analysis_result)
+                result_dict["distribution_analysis"] = distribution_dict
 
             return json.dumps(result_dict, ensure_ascii=False, indent=2)
 
@@ -542,3 +560,124 @@ class ReportFormatter:
             ],
             "success_rate": self._calculate_success_rate(result),
         }
+    
+    def _format_distribution_analysis(self, result: ValidationResult) -> str:
+        """분포 분석 결과를 포맷팅합니다."""
+        if not result.distribution_analysis:
+            return ""
+        
+        sections = ["## 📈 컬럼 분포 분석\n"]
+        
+        for column_name, analysis_result in result.distribution_analysis.items():
+            sections.append(f"### {column_name}")
+            sections.append(f"- **데이터 타입**: {analysis_result.data_type}")
+            sections.append(f"- **전체 행 수**: {analysis_result.total_count:,}")
+            sections.append(f"- **null 값 수**: {analysis_result.null_count:,}")
+            sections.append(f"- **null 비율**: {analysis_result.null_percentage:.2f}%")
+            sections.append(f"- **처리 시간**: {analysis_result.processing_time:.4f}초")
+            
+            # 범주형 분포
+            if hasattr(analysis_result.distribution, 'categories'):
+                sections.append("\n**범주별 분포:**")
+                for category in analysis_result.distribution.categories:
+                    sections.append(f"- {category.value}: {category.count:,}개 ({category.percentage:.2f}%)")
+                
+                if analysis_result.distribution.other_count > 0:
+                    sections.append(f"- 기타: {analysis_result.distribution.other_count:,}개 ({analysis_result.distribution.other_percentage:.2f}%)")
+                
+                sections.append(f"- **고유값 총 개수**: {analysis_result.distribution.unique_count:,}")
+            
+            # 숫자형 분포
+            elif hasattr(analysis_result.distribution, 'stats') and analysis_result.distribution.stats:
+                stats = analysis_result.distribution.stats
+                sections.append("\n**통계 정보:**")
+                sections.append(f"- 평균: {stats.mean:.2f}")
+                sections.append(f"- 중앙값: {stats.median:.2f}")
+                sections.append(f"- 표준편차: {stats.std:.2f}")
+                sections.append(f"- 최솟값: {stats.min:.2f}")
+                sections.append(f"- 최댓값: {stats.max:.2f}")
+                sections.append(f"- 25% 분위수: {stats.q25:.2f}")
+                sections.append(f"- 75% 분위수: {stats.q75:.2f}")
+                
+                sections.append("\n**구간별 분포:**")
+                for bin_info in analysis_result.distribution.bins:
+                    sections.append(f"- {bin_info.range[0]:.1f} - {bin_info.range[1]:.1f}: {bin_info.count:,}개 ({bin_info.percentage:.2f}%)")
+                
+                sections.append(f"- **자동 생성된 구간**: {'예' if analysis_result.distribution.auto_generated else '아니오'}")
+            
+            sections.append("")  # 빈 줄 추가
+        
+        return "\n".join(sections)
+
+    def _format_distribution_analysis_html(self, result: ValidationResult) -> str:
+        """
+        분포 분석 결과를 HTML 형식으로 포맷팅합니다.
+        
+        Args:
+            result: 검증 결과 객체
+            
+        Returns:
+            str: HTML 형식의 분포 분석 결과
+        """
+        if not result.distribution_analysis:
+            return ""
+        
+        sections = []
+        sections.append('<h2><span class="emoji">📊</span> 컬럼 분포 분석</h2>')
+        
+        for column_name, analysis_result in result.distribution_analysis.items():
+            sections.append(f'<div style="margin: 20px 0; padding: 20px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #007bff;">')
+            sections.append(f'<h3><span class="emoji">📈</span> {column_name} 컬럼</h3>')
+            
+            # 기본 정보
+            sections.append('<table style="width: 100%; margin: 10px 0;">')
+            sections.append('<tr><th style="width: 30%;">항목</th><th>값</th></tr>')
+            sections.append(f'<tr><td>데이터 타입</td><td>{analysis_result.data_type}</td></tr>')
+            sections.append(f'<tr><td>총 개수</td><td>{analysis_result.total_count:,}</td></tr>')
+            sections.append(f'<tr><td>NULL 개수</td><td>{analysis_result.null_count:,}</td></tr>')
+            sections.append(f'<tr><td>NULL 비율</td><td>{analysis_result.null_percentage:.2f}%</td></tr>')
+            sections.append('</table>')
+            
+            # 범주형 분포
+            if hasattr(analysis_result.distribution, 'categories'):
+                sections.append('<h4>📋 범주별 분포</h4>')
+                sections.append('<table style="width: 100%; margin: 10px 0;">')
+                sections.append('<tr><th>범주</th><th>개수</th><th>비율</th></tr>')
+                
+                for category in analysis_result.distribution.categories:
+                    sections.append(f'<tr><td>{category.value}</td><td>{category.count:,}</td><td>{category.percentage:.2f}%</td></tr>')
+                
+                if analysis_result.distribution.other_count > 0:
+                    sections.append(f'<tr><td>기타</td><td>{analysis_result.distribution.other_count:,}</td><td>{analysis_result.distribution.other_percentage:.2f}%</td></tr>')
+                
+                sections.append('</table>')
+                sections.append(f'<p><strong>고유값 총 개수:</strong> {analysis_result.distribution.unique_count:,}</p>')
+            
+            # 숫자형 분포
+            elif hasattr(analysis_result.distribution, 'statistics'):
+                stats = analysis_result.distribution.statistics
+                sections.append('<h4>📊 통계 정보</h4>')
+                sections.append('<table style="width: 100%; margin: 10px 0;">')
+                sections.append('<tr><th>통계</th><th>값</th></tr>')
+                sections.append(f'<tr><td>평균</td><td>{stats.mean:.2f}</td></tr>')
+                sections.append(f'<tr><td>중앙값</td><td>{stats.median:.2f}</td></tr>')
+                sections.append(f'<tr><td>표준편차</td><td>{stats.std:.2f}</td></tr>')
+                sections.append(f'<tr><td>최솟값</td><td>{stats.min:.2f}</td></tr>')
+                sections.append(f'<tr><td>최댓값</td><td>{stats.max:.2f}</td></tr>')
+                sections.append(f'<tr><td>25% 분위수</td><td>{stats.q25:.2f}</td></tr>')
+                sections.append(f'<tr><td>75% 분위수</td><td>{stats.q75:.2f}</td></tr>')
+                sections.append('</table>')
+                
+                sections.append('<h4>📈 구간별 분포</h4>')
+                sections.append('<table style="width: 100%; margin: 10px 0;">')
+                sections.append('<tr><th>구간</th><th>개수</th><th>비율</th></tr>')
+                
+                for bin_info in analysis_result.distribution.bins:
+                    sections.append(f'<tr><td>{bin_info.range[0]:.1f} - {bin_info.range[1]:.1f}</td><td>{bin_info.count:,}</td><td>{bin_info.percentage:.2f}%</td></tr>')
+                
+                sections.append('</table>')
+                sections.append(f'<p><strong>자동 생성된 구간:</strong> {"예" if analysis_result.distribution.auto_generated else "아니오"}</p>')
+            
+            sections.append('</div>')
+        
+        return '\n'.join(sections)

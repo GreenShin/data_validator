@@ -253,12 +253,18 @@ class FileHandler:
             config: 파일 정보 설정
 
         Returns:
-            int: 행 수
+            int: 데이터 행 수 (헤더 제외)
         """
         try:
             with open(file_path, "r", encoding=config.encoding) as f:
                 reader = csv.reader(f, delimiter=config.delimiter)
-                return sum(1 for _ in reader)
+                total_rows = sum(1 for _ in reader)
+                
+                # 헤더가 있으면 1을 빼서 데이터 행 수만 반환
+                if config.has_header:
+                    return total_rows - 1
+                else:
+                    return total_rows
 
         except Exception as e:
             raise Exception(f"행 수 계산 오류: {e}")

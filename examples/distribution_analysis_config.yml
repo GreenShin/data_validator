@@ -1,0 +1,72 @@
+file_info:
+  file_type: csv
+  expected_rows: 100
+  encoding: utf-8
+  delimiter: ","
+  has_header: true
+
+columns:
+  - name: "product_id"
+    type: "integer"
+    required: true
+    range:
+      min: 1
+      max: 1000
+  - name: "product_name"
+    type: "string"
+    required: true
+    length:
+      min: 3
+      max: 50
+  - name: "category"
+    type: "string"
+    required: true
+    allowed_values: ["Electronics", "Books", "Clothing", "Home", "Sports"]
+    case_sensitive: false
+  - name: "price"
+    type: "float"
+    required: true
+    range:
+      min: 0.01
+      max: 10000.00
+  - name: "quantity"
+    type: "integer"
+    required: true
+    range:
+      min: 0
+      max: 1000
+  - name: "rating"
+    type: "float"
+    required: false
+    range:
+      min: 1.0
+      max: 5.0
+  - name: "is_featured"
+    type: "boolean"
+    required: true
+  - name: "launch_date"
+    type: "datetime"
+    required: true
+    format: "%Y-%m-%d"
+
+# 분포 분석 설정
+distribution_analysis:
+  enabled: true
+  columns:
+    - name: "category"
+      type: "categorical"
+      max_categories: 10
+    - name: "price"
+      type: "numerical"
+      auto_bins: true
+      bin_count: 8
+    - name: "quantity"
+      type: "numerical"
+      bins: [0, 10, 50, 100, 200, 500, 1000]
+    - name: "rating"
+      type: "numerical"
+      auto_bins: true
+      bin_count: 5
+    - name: "is_featured"
+      type: "categorical"
+      max_categories: 5

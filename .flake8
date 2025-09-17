@@ -1,0 +1,33 @@
+[flake8]
+max-line-length = 88
+extend-ignore = E203, W503
+exclude = 
+    .git,
+    __pycache__,
+    .venv,
+    venv,
+    .pytest_cache,
+    build,
+    dist,
+    *.egg-info,
+    .coverage,
+    htmlcov,
+    .tox,
+    .mypy_cache,
+    .DS_Store
+
+# Distribution analysis specific rules
+per-file-ignores =
+    # Allow longer lines in distribution analysis for statistical formulas
+    src/distribution/*.py:E501
+    # Allow unused imports in __init__.py files
+    src/distribution/__init__.py:F401
+    # Allow complex expressions in statistical calculations
+    src/distribution/numerical.py:E501,E701
+    src/distribution/categorical.py:E501
+
+# Import organization
+import-order-style = google
+application-import-names = src
+
+

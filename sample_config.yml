@@ -37,3 +37,19 @@ columns:
   type: datetime
   required: true
   format: '%Y-%m-%d %H:%M:%S'
+
+# 컬럼 분포 분석 설정 (--analyze 옵션 사용 시)
+distribution_analysis:
+  enabled: true
+  columns:
+    - name: "category"
+      type: "categorical"
+      max_categories: 100
+    - name: "age"
+      type: "numerical"
+      auto_bins: true
+    - name: "id"
+      type: "numerical"
+      bins: [0, 100000, 500000, 1000000]
+  memory_limit: 2000  # MB
+  chunk_size: 10000   # 행 수

@@ -167,6 +167,9 @@ class ValidationConfig(BaseModel):
 
     file_info: FileInfo = Field(..., description="파일 정보")
     columns: List[ValidationRule] = Field(..., description="컬럼별 검증 규칙 목록")
+    distribution_analysis: Optional[Dict[str, Any]] = Field(
+        default=None, description="컬럼 분포 분석 설정"
+    )
 
     @validator("columns")
     def validate_columns(cls, v):

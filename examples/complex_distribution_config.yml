@@ -1,0 +1,67 @@
+file_info:
+  file_type: csv
+  expected_rows: 30
+  encoding: utf-8
+  delimiter: ","
+  has_header: true
+
+columns:
+  - name: "customer_id"
+    type: "integer"
+    required: true
+  - name: "age"
+    type: "integer"
+    required: false
+    range:
+      min: 18
+      max: 100
+  - name: "income"
+    type: "float"
+    required: false
+    range:
+      min: 0
+      max: 1000000
+  - name: "city"
+    type: "string"
+    required: true
+  - name: "education"
+    type: "string"
+    required: false
+    allowed_values: ["High School", "Bachelor", "Master", "PhD", "Other"]
+  - name: "purchase_amount"
+    type: "float"
+    required: true
+    range:
+      min: 0.01
+      max: 10000.00
+  - name: "satisfaction_score"
+    type: "float"
+    required: false
+    range:
+      min: 1.0
+      max: 5.0
+
+# 분포 분석 설정
+distribution_analysis:
+  enabled: true
+  columns:
+    - name: "age"
+      type: "numerical"
+      auto_bins: true
+      bin_count: 6
+    - name: "income"
+      type: "numerical"
+      bins: [0, 30000, 50000, 75000, 100000, 150000, 200000, 500000, 1000000]
+    - name: "city"
+      type: "categorical"
+      max_categories: 20
+    - name: "education"
+      type: "categorical"
+      max_categories: 10
+    - name: "purchase_amount"
+      type: "numerical"
+      auto_bins: true
+      bin_count: 5
+    - name: "satisfaction_score"
+      type: "numerical"
+      bins: [1.0, 2.0, 3.0, 4.0, 5.0]

@@ -55,7 +55,12 @@ def cli():
     default="all",
     help="결과 리포트 형식 (기본값: all)",
 )
-def validate(config, input, output, verbose, log_file, format):
+@click.option(
+    "--analyze",
+    is_flag=True,
+    help="컬럼 분포 분석을 수행합니다 (설정 파일에 distribution_analysis 섹션이 필요)",
+)
+def validate(config, input, output, verbose, log_file, format, analyze):
     """
     데이터 파일의 구문정확성을 검증합니다 (CSV, JSON, JSONL 지원).
 
@@ -84,6 +89,12 @@ def validate(config, input, output, verbose, log_file, format):
 
         # Data Validator 초기화
         validator = DataValidator(config_path=config, verbose=verbose, log_file=log_file)
+        
+        # 분포 분석 옵션 처리
+        if analyze:
+            if verbose:
+                click.echo("📊 분포 분석 모드가 활성화되었습니다.")
+            validator.enable_distribution_analysis()
 
         # 검증 실행
         if input_path.is_file():

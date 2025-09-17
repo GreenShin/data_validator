@@ -80,6 +80,9 @@ class ValidationResult(BaseModel):
     timestamp: datetime = Field(
         default_factory=datetime.now, description="검증 수행 시간"
     )
+    distribution_analysis: Optional[dict] = Field(
+        default=None, description="컬럼 분포 분석 결과"
+    )
 
     @validator("total_rows")
     def validate_total_rows(cls, v):
@@ -160,7 +163,7 @@ class ValidationResult(BaseModel):
 
     def to_dict(self) -> dict:
         """딕셔너리 형태로 변환"""
-        return {
+        result = {
             "file_name": self.file_name,
             "total_rows": self.total_rows,
             "total_columns": self.total_columns,
@@ -173,6 +176,12 @@ class ValidationResult(BaseModel):
             "timestamp": self.timestamp.isoformat(),
             "errors": [error.to_dict() for error in self.errors],
         }
+        
+        # 분포 분석 결과가 있으면 추가
+        if self.distribution_analysis:
+            result["distribution_analysis"] = self.distribution_analysis
+            
+        return result
 
     def to_summary_dict(self) -> dict:
         """요약 정보만 포함한 딕셔너리 반환"""

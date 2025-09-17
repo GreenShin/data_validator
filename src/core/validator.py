@@ -17,6 +17,8 @@ from ..core.config import ConfigManager
 from ..utils.file_handler import FileHandler
 from ..utils.formatter import ReportFormatter
 from ..utils.logger import Logger
+from ..distribution.analyzer import DistributionAnalyzer
+from ..distribution.config import DistributionConfig
 
 
 class DataValidator:
@@ -48,6 +50,10 @@ class DataValidator:
         # 설정 로드
         self.config: Optional[ValidationConfig] = None
         self._load_config()
+        
+        # 분포 분석 관련
+        self.distribution_analyzer: Optional[DistributionAnalyzer] = None
+        self.distribution_enabled: bool = False
 
     def _load_config(self) -> None:
         """설정 파일을 로드합니다."""
@@ -62,6 +68,33 @@ class DataValidator:
         except Exception as e:
             self.logger.log_error(e, "설정 파일 로드")
             raise
+    
+    def enable_distribution_analysis(self) -> None:
+        """분포 분석을 활성화합니다."""
+        try:
+            # 설정에서 분포 분석 설정 확인
+            if hasattr(self.config, 'distribution_analysis') and self.config.distribution_analysis:
+                from ..distribution.config import DistributionConfig
+                from ..distribution.analyzer import DistributionAnalyzer
+                
+                # DistributionConfig 생성
+                dist_config = DistributionConfig(
+                    enabled=True,
+                    columns=self.config.distribution_analysis.get('columns', [])
+                )
+                
+                # DistributionAnalyzer 초기화
+                self.distribution_analyzer = DistributionAnalyzer(dist_config)
+                self.distribution_enabled = True
+                
+                self.logger.log_success("분포 분석이 활성화되었습니다")
+            else:
+                self.logger.log_warning("설정 파일에 distribution_analysis 섹션이 없습니다")
+                self.distribution_enabled = False
+                
+        except Exception as e:
+            self.logger.log_error(e, "분포 분석 활성화 실패")
+            self.distribution_enabled = False
 
     def validate_file(self, file_path: str) -> ValidationResult:
         """
@@ -101,7 +134,14 @@ class DataValidator:
             # 4. 형식정확성 검증
             format_valid, format_errors = self._validate_format(file_path)
 
-            # 5. 결과 통합
+            # 5. 분포 분석 (활성화된 경우)
+            distribution_results = None
+            if self.distribution_enabled:
+                distribution_results = self.analyze_distribution(file_path)
+                if distribution_results:
+                    self.logger.log_success(f"분포 분석 완료: {len(distribution_results)}개 컬럼")
+
+            # 6. 결과 통합
             all_errors = structural_errors + format_errors
             processing_time = time.time() - start_time
 
@@ -113,6 +153,7 @@ class DataValidator:
                 format_valid=format_valid,
                 errors=all_errors,
                 processing_time=processing_time,
+                distribution_analysis=distribution_results,
                 timestamp=datetime.now(),
             )
 
@@ -459,6 +500,78 @@ class DataValidator:
         except Exception as e:
             self.logger.log_error(e, "설정 검증")
             return False
+
+    def enable_distribution_analysis(self) -> None:
+        """
+        분포 분석을 활성화합니다.
+        
+        설정 파일에서 distribution_analysis 섹션을 찾아 DistributionAnalyzer를 초기화합니다.
+        """
+        try:
+            # 설정 파일에서 분포 분석 설정 로드
+            import yaml
+            with open(self.config_path, 'r', encoding='utf-8') as f:
+                config_data = yaml.safe_load(f)
+            
+            distribution_config_data = config_data.get('distribution_analysis')
+            if not distribution_config_data:
+                self.logger.warning("설정 파일에 distribution_analysis 섹션이 없습니다.")
+                return
+            
+            # DistributionConfig 생성
+            distribution_config = DistributionConfig(**distribution_config_data)
+            
+            # DistributionAnalyzer 초기화
+            self.distribution_analyzer = DistributionAnalyzer(distribution_config)
+            self.distribution_enabled = True
+            
+            self.logger.log_success("분포 분석이 활성화되었습니다.")
+            
+        except Exception as e:
+            self.logger.log_error(e, "분포 분석 활성화")
+            self.distribution_enabled = False
+    
+    def analyze_distribution(self, file_path: str) -> Optional[Dict[str, Any]]:
+        """
+        파일의 컬럼 분포를 분석합니다.
+        
+        Args:
+            file_path: 분석할 파일 경로
+            
+        Returns:
+            Dict[str, Any]: 분포 분석 결과 또는 None
+        """
+        if not self.distribution_enabled or not self.distribution_analyzer:
+            return None
+        
+        try:
+            # CSV 파일만 지원 (현재)
+            if not file_path.lower().endswith('.csv'):
+                self.logger.warning(f"분포 분석은 CSV 파일만 지원됩니다: {file_path}")
+                return None
+            
+            # CSV 파일 읽기
+            import pandas as pd
+            df = pd.read_csv(file_path)
+            
+            # 분포 분석 결과 저장
+            distribution_results = {}
+            
+            # 설정된 컬럼들에 대해 분포 분석 수행
+            for column_config in self.distribution_analyzer.config.columns:
+                column_name = column_config.name
+                if column_name in df.columns:
+                    column_data = df[column_name].tolist()
+                    result = self.distribution_analyzer.analyze_column(column_name, column_data)
+                    distribution_results[column_name] = result
+                else:
+                    self.logger.warning(f"컬럼 '{column_name}'을 찾을 수 없습니다.")
+            
+            return distribution_results
+            
+        except Exception as e:
+            self.logger.log_error(e, f"분포 분석: {file_path}")
+            return None
 
     def close(self) -> None:
         """리소스를 정리합니다."""

@@ -1,0 +1,51 @@
+product_id,product_name,category,price,quantity,rating,is_featured,launch_date
+1,MacBook Pro 16,Electronics,2499.99,25,4.8,true,2023-01-15
+2,Python Programming Book,Books,49.99,150,4.6,false,2023-02-01
+3,Cotton T-Shirt,Clothing,19.99,200,4.2,false,2023-02-15
+4,Wireless Headphones,Electronics,199.99,80,4.5,true,2023-03-01
+5,Data Science Handbook,Books,79.99,75,4.7,true,2023-03-15
+6,Jeans,Clothing,89.99,120,4.3,false,2023-04-01
+7,Smartphone,Electronics,899.99,45,4.4,true,2023-04-15
+8,Office Chair,Home,299.99,30,4.1,false,2023-05-01
+9,Running Shoes,Sports,129.99,90,4.6,true,2023-05-15
+10,Kitchen Knife Set,Home,79.99,60,4.3,false,2023-06-01
+11,Tablet,Electronics,399.99,55,4.2,false,2023-06-15
+12,Novel Collection,Books,29.99,180,4.4,false,2023-07-01
+13,Winter Jacket,Clothing,149.99,40,4.5,true,2023-07-15
+14,Gaming Mouse,Electronics,79.99,100,4.7,false,2023-08-01
+15,Yoga Mat,Sports,39.99,85,4.1,false,2023-08-15
+16,Desk Lamp,Home,49.99,70,4.0,false,2023-09-01
+17,Programming Guide,Books,59.99,95,4.8,true,2023-09-15
+18,Bluetooth Speaker,Electronics,129.99,65,4.3,false,2023-10-01
+19,Summer Dress,Clothing,69.99,110,4.2,false,2023-10-15
+20,Tennis Racket,Sports,89.99,35,4.4,false,2023-11-01
+21,Monitor,Electronics,299.99,25,4.6,true,2023-11-15
+22,Cookbook,Books,34.99,140,4.1,false,2023-12-01
+23,Hoodie,Clothing,79.99,75,4.3,false,2023-12-15
+24,Standing Desk,Home,399.99,20,4.5,true,2024-01-01
+25,Basketball,Sports,29.99,120,4.2,false,2024-01-15
+26,Laptop Stand,Electronics,49.99,90,4.0,false,2024-02-01
+27,Art History Book,Books,89.99,50,4.7,true,2024-02-15
+28,Formal Shirt,Clothing,99.99,60,4.4,false,2024-03-01
+29,Air Purifier,Home,199.99,40,4.3,false,2024-03-15
+30,Cycling Helmet,Sports,79.99,55,4.5,false,2024-04-01
+31,Mechanical Keyboard,Electronics,149.99,70,4.8,true,2024-04-15
+32,Biography,Books,44.99,85,4.2,false,2024-05-01
+33,Denim Jacket,Clothing,119.99,45,4.3,false,2024-05-15
+34,Smart Thermostat,Home,249.99,15,4.6,true,2024-06-01
+35,Swimming Goggles,Sports,24.99,100,4.1,false,2024-06-15
+36,Webcam,Electronics,89.99,80,4.4,false,2024-07-01
+37,Poetry Collection,Books,19.99,160,4.5,false,2024-07-15
+38,Cardigan,Clothing,89.99,65,4.2,false,2024-08-01
+39,Robot Vacuum,Home,299.99,30,4.7,true,2024-08-15
+40,Water Bottle,Sports,19.99,150,4.0,false,2024-09-01
+41,Graphics Card,Electronics,599.99,10,4.9,true,2024-09-15
+42,Self-Help Book,Books,24.99,200,4.3,false,2024-10-01
+43,Scarf,Clothing,29.99,130,4.1,false,2024-10-15
+44,Smart Doorbell,Home,179.99,35,4.4,false,2024-11-01
+45,Dumbbells,Sports,79.99,50,4.6,false,2024-11-15
+46,USB-C Hub,Electronics,39.99,120,4.2,false,2024-12-01
+47,Travel Guide,Books,34.99,90,4.4,false,2024-12-15
+48,Winter Boots,Clothing,159.99,25,4.5,true,2025-01-01
+49,Smart Lock,Home,199.99,20,4.3,false,2025-01-15
+50,Resistance Bands,Sports,29.99,110,4.1,false,2025-02-01
