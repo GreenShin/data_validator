@@ -22,11 +22,19 @@ CSV, JSON, JSONL 파일의 구문정확성을 자동으로 검증하고 상세�
 - **정규표현식 패턴 검증**: 사용자 정의 패턴 매칭
 - **JSON 특화 검증**: 중첩 객체/배열 구조, JSON 스키마 준수
 
+### 📊 데이터 분포 분석
+- **수치형 데이터 분석**: 평균, 중앙값, 표준편차, 분위수, 히스토그램
+- **범주형 데이터 분석**: 범주별 분포, 고유값 개수, 빈도 분석
+- **자동 구간 생성**: 수치형 데이터의 최적 구간 자동 생성
+- **사용자 정의 구간**: 사용자가 직접 구간 설정 가능
+- **Null 값 처리**: 빈 값, None, NaN 등 모든 null 타입 자동 감지
+
 ### 📊 상세한 결과 리포트
 - **Markdown**: 읽기 쉬운 텍스트 리포트
 - **HTML**: 웹 브라우저용 아름다운 리포트
 - **JSON**: 프로그래밍 처리용 구조화된 데이터
 - 오류 상세 정보, 통계, 권장사항 제공
+- **분포 분석 결과**: 컬럼별 상세 분포 정보 포함
 
 ### 🚀 사용자 친화적 인터페이스
 - 직관적인 명령행 인터페이스
@@ -91,6 +99,9 @@ python -m src.main validate -c json_config.yml -i data.json
 # JSONL 파일 검증
 python -m src.main validate -c jsonl_config.yml -i data.jsonl
 
+# 분포 분석과 함께 검증
+python -m src.main validate -c csv_config.yml -i data.csv --analyze
+
 # 폴더 내 모든 파일 검증
 python -m src.main validate -c config.yml -i /path/to/files
 ```
@@ -114,6 +125,12 @@ python -m src.main validate -c config.yml -i /path/to/files -o /path/to/results
 
 # 상세 로그와 함께 검증
 python -m src.main validate -c config.yml -i data.json -v
+
+# 분포 분석과 함께 검증
+python -m src.main validate -c config.yml -i data.csv --analyze
+
+# 분포 분석 + 상세 로그
+python -m src.main validate -c config.yml -i data.csv --analyze -v
 
 # 특정 형식으로 결과 저장
 python -m src.main validate -c config.yml -i data.jsonl --format html
@@ -155,6 +172,7 @@ python -m src.main analyze -i data.jsonl -o auto_jsonl_config.yml
 | `-o, --output` | 결과 파일 저장 경로 | 입력 경로와 동일 |
 | `-t, --type` | 샘플 설정 파일 타입 (csv/json/jsonl) | csv |
 | `-v, --verbose` | 상세 로그 출력 | False |
+| `--analyze` | 데이터 분포 분석 활성화 | False |
 | `--log-file` | 로그 파일 경로 | None |
 | `--format` | 결과 리포트 형식 (markdown/html/json/all) | all |
 
@@ -203,6 +221,21 @@ columns:
     type: "datetime"
     required: true
     format: "%Y-%m-%d %H:%M:%S"      # 날짜 형식
+
+# 분포 분석 설정 (선택적)
+distribution_analysis:
+  enabled: true
+  columns:
+    - name: "age"
+      type: "numerical"
+      auto_bins: true
+      bin_count: 10
+    - name: "income"
+      type: "numerical"
+      bins: [0, 30000, 50000, 75000, 100000, 200000]
+    - name: "category"
+      type: "categorical"
+      max_categories: 10
 ```
 
 ### 지원되는 데이터 타입
@@ -216,6 +249,41 @@ columns:
 - `object`: JSON 객체
 - `array`: JSON 배열
 - `null`: null 값
+
+### 분포 분석 설정
+
+#### 수치형 데이터 분석
+```yaml
+distribution_analysis:
+  enabled: true
+  columns:
+    - name: "age"
+      type: "numerical"
+      auto_bins: true        # 자동 구간 생성
+      bin_count: 10          # 구간 개수
+    - name: "income"
+      type: "numerical"
+      bins: [0, 30000, 50000, 75000, 100000, 200000]  # 사용자 정의 구간
+```
+
+#### 범주형 데이터 분석
+```yaml
+distribution_analysis:
+  enabled: true
+  columns:
+    - name: "city"
+      type: "categorical"
+      max_categories: 10     # 최대 표시할 범주 수
+    - name: "education"
+      type: "categorical"
+      max_categories: 5
+```
+
+#### 분포 분석 옵션
+- **`auto_bins`**: `true`로 설정하면 데이터 범위에 따라 자동으로 구간 생성
+- **`bin_count`**: 자동 구간 생성 시 사용할 구간 개수
+- **`bins`**: 사용자 정의 구간 리스트 (자동 구간과 함께 사용 불가)
+- **`max_categories`**: 범주형 데이터에서 표시할 최대 범주 수
 
 ### JSON/JSONL 특화 설정
 
@@ -335,6 +403,13 @@ csv_validator/
 │   │   ├── format.py      # 형식정확성 검증
 │   │   ├── json_parser.py # JSON/JSONL 파싱
 │   │   └── validator.py   # 검증 엔진
+│   ├── distribution/      # 분포 분석 모듈
+│   │   ├── analyzer.py    # 분포 분석 엔진
+│   │   ├── categorical.py # 범주형 데이터 분석
+│   │   ├── numerical.py   # 수치형 데이터 분석
+│   │   ├── models.py      # 분포 분석 데이터 모델
+│   │   ├── config.py      # 분포 분석 설정
+│   │   └── utils.py       # 분포 분석 유틸리티
 │   ├── models/            # 데이터 모델
 │   │   ├── validation_rule.py # 검증 규칙 모델
 │   │   ├── result.py      # 검증 결과 모델
@@ -384,6 +459,18 @@ python -m src.main analyze -i examples/jsonl/log_entries.jsonl -o auto_logs_conf
 
 # 2. 로그 데이터 검증
 python -m src.main validate -c auto_logs_config.yml -i examples/jsonl/log_entries.jsonl -v
+```
+
+### 예제 4: 고객 데이터 분포 분석
+```bash
+# 1. 고객 데이터용 설정 파일 생성 (분포 분석 포함)
+python -m src.main init -t csv -o customer_config.yml
+
+# 2. 설정 파일에 분포 분석 설정 추가 (examples/customer_data_config.yml 참조)
+# 3. 분포 분석과 함께 고객 데이터 검증
+python -m src.main validate -c customer_config.yml -i examples/csv/customer_data.csv --analyze -v
+
+# 4. 결과 확인: Markdown, HTML, JSON 보고서에 분포 분석 결과 포함
 ```
 
 ## 🐛 문제 해결
@@ -464,15 +551,27 @@ python -m pytest tests/ --cov=src
 | 항목 | 성능 |
 |------|------|
 | **처리 속도** | 25-100 행/초 |
+| **분포 분석 속도** | 2,000-4,000 행/초 |
 | **메모리 사용량** | 효율적 (스트리밍 처리) |
 | **지원 파일 크기** | 100만 행 이상 |
 | **지원 인코딩** | UTF-8, CP949, EUC-KR, ASCII |
 | **지원 구분자** | 쉼표, 세미콜론, 탭, 파이프 |
 | **지원 파일 형식** | CSV, JSON, JSONL |
+| **분포 분석 지원** | 수치형, 범주형 데이터 |
 
 ## 🔄 버전 히스토리
 
-### v0.2.0 (현재)
+### v0.3.0 (현재)
+- **데이터 분포 분석 기능 추가**
+  - 수치형 데이터: 평균, 중앙값, 표준편차, 히스토그램
+  - 범주형 데이터: 범주별 분포, 빈도 분석
+  - 자동 구간 생성 및 사용자 정의 구간 지원
+  - Null 값 자동 감지 및 처리
+- CLI에 `--analyze` 옵션 추가
+- 분포 분석 결과를 보고서에 통합
+- Pydantic v2 호환성 업데이트
+
+### v0.2.0
 - JSON, JSONL 파일 지원 추가
 - 자동 파일 분석 기능 추가
 - 향상된 오류 메시지 및 로깅
