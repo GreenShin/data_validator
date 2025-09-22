@@ -1,0 +1,31 @@
+customer_id,age,income,city,education,purchase_amount,satisfaction_score
+1,25,45000,Seoul,Bachelor,125.50,4.2
+2,,,Busan,High School,89.99,3.8
+3,35,75000,Seoul,Master,299.99,4.5
+4,28,52000,Incheon,Bachelor,156.75,4.0
+5,42,,Daegu,PhD,445.00,4.8
+6,31,68000,Seoul,Bachelor,78.25,3.9
+7,22,38000,Gwangju,High School,45.99,3.5
+8,38,85000,Seoul,Master,567.50,4.6
+9,29,48000,Busan,Bachelor,123.00,4.1
+10,45,95000,Seoul,PhD,789.99,4.9
+11,26,42000,Incheon,Bachelor,67.50,3.7
+12,33,72000,Daegu,Master,234.75,4.3
+13,24,35000,Gwangju,High School,89.99,3.6
+14,41,88000,Seoul,Master,456.25,4.7
+15,27,51000,Busan,Bachelor,178.50,4.2
+16,36,78000,Incheon,Master,345.99,4.4
+17,23,32000,Daegu,High School,56.75,3.4
+18,39,92000,Seoul,PhD,678.25,4.8
+19,30,59000,Gwangju,Bachelor,145.00,4.0
+20,44,86000,Busan,Master,523.50,4.6
+21,25,41000,Incheon,Bachelor,98.99,3.8
+22,32,71000,Daegu,Master,267.25,4.3
+23,21,28000,Gwangju,High School,34.99,3.2
+24,37,83000,Seoul,Master,489.75,4.5
+25,28,54000,Busan,Bachelor,167.50,4.1
+26,35,76000,Incheon,Master,312.99,4.4
+27,26,39000,Daegu,Bachelor,76.25,3.6
+28,43,91000,Gwangju,PhD,634.50,4.7
+29,29,57000,Seoul,Bachelor,189.75,4.2
+30,31,69000,Busan,Master,278.99,4.3

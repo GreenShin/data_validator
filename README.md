@@ -157,10 +157,16 @@ python -m src.main check-config -c config.yml
 
 #### `analyze` - 파일 자동 분석 (CSV, JSON, JSONL 지원)
 ```bash
-# 파일 분석하여 자동 설정 생성
+# 파일 분석하여 자동 설정 생성 (분포 분석 섹션 포함)
 python -m src.main analyze -i data.csv -o auto_csv_config.yml
 python -m src.main analyze -i data.json -o auto_json_config.yml
 python -m src.main analyze -i data.jsonl -o auto_jsonl_config.yml
+
+# 분포 분석 섹션 제외하고 생성
+python -m src.main analyze -i data.csv -o config.yml --no-distribution
+
+# 분포 분석 섹션 명시적으로 포함 (기본값)
+python -m src.main analyze -i data.csv -o config.yml --with-distribution
 ```
 
 ### 명령행 옵션
@@ -173,6 +179,7 @@ python -m src.main analyze -i data.jsonl -o auto_jsonl_config.yml
 | `-t, --type` | 샘플 설정 파일 타입 (csv/json/jsonl) | csv |
 | `-v, --verbose` | 상세 로그 출력 | False |
 | `--analyze` | 데이터 분포 분석 활성화 | False |
+| `--with-distribution/--no-distribution` | analyze 명령어에서 분포 분석 섹션 포함 여부 | True |
 | `--log-file` | 로그 파일 경로 | None |
 | `--format` | 결과 리포트 형식 (markdown/html/json/all) | all |
 

@@ -5,6 +5,7 @@ Categorical distribution analysis module.
 """
 
 import time
+import numpy as np
 from typing import List, Any, Dict
 from collections import Counter
 from .models import CategoricalDistribution, CategoryInfo, ColumnDistribution

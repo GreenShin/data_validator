@@ -262,7 +262,13 @@ def check_config(config, verbose):
     help="분석 결과 저장 경로 (기본값: 입력 파일과 동일한 디렉토리)",
 )
 @click.option("--verbose", "-v", is_flag=True, help="상세 로그 출력")
-def analyze(input, output, verbose):
+@click.option(
+    "--with-distribution/--no-distribution",
+    "--with-dist/--no-dist",
+    default=True,
+    help="분포 분석 섹션을 포함하여 설정 파일을 생성합니다 (기본값: True)",
+)
+def analyze(input, output, verbose, with_distribution):
     """
     데이터 파일을 분석하여 자동으로 설정 파일을 생성합니다 (CSV, JSON, JSONL 지원).
 
@@ -271,6 +277,8 @@ def analyze(input, output, verbose):
         data-validator analyze -i data.json
         data-validator analyze -i data.jsonl
         data-validator analyze -i data.csv -o auto_config.yml
+        data-validator analyze -i data.csv --with-distribution
+        data-validator analyze -i data.csv --no-distribution
     """
     try:
         input_path = Path(input)
@@ -307,7 +315,7 @@ def analyze(input, output, verbose):
                 delimiter=detected_delimiter,
                 nrows=1000,  # 처음 1000행만 분석
             )
-            auto_config = _generate_auto_config(df, file_info, file_type)
+            auto_config = _generate_auto_config(df, file_info, file_type, with_distribution)
         else:
             # JSON/JSONL 파일 읽기
             from ..models import FileInfo as FileInfoModel
@@ -332,7 +340,7 @@ def analyze(input, output, verbose):
             else:
                 df = pd.DataFrame()
             
-            auto_config = _generate_auto_config(df, file_info, file_type)
+            auto_config = _generate_auto_config(df, file_info, file_type, with_distribution)
 
         # 설정 파일 저장
         import yaml
@@ -444,7 +452,7 @@ def _print_summary(results):
         click.echo(f"  평균 처리 속도: {total_rows/total_time:.0f} 행/초")
 
 
-def _generate_auto_config(df, file_info, file_type):
+def _generate_auto_config(df, file_info, file_type, with_distribution=True):
     """파일 분석을 바탕으로 자동 설정을 생성합니다."""
     import pandas as pd
     from datetime import datetime
@@ -530,7 +538,60 @@ def _generate_auto_config(df, file_info, file_type):
 
         config["columns"].append(column_rule)
 
+    # distribution_analysis 섹션 추가
+    if with_distribution:
+        config["distribution_analysis"] = _generate_distribution_analysis(df)
+
     return config
+
+
+def _generate_distribution_analysis(df):
+    """DataFrame 분석을 바탕으로 distribution_analysis 섹션을 생성합니다."""
+    import pandas as pd
+    
+    distribution_config = {
+        "enabled": True,
+        "columns": []
+    }
+    
+    for column in df.columns:
+        column_data = df[column].dropna()
+        if column_data.empty:
+            continue
+            
+        # 데이터 타입 추론
+        data_type = _infer_data_type(column_data)
+        
+        # 분포 분석 설정 생성
+        if data_type in ["string"]:
+            # 범주형 데이터 확인
+            unique_count = column_data.nunique()
+            total_count = len(column_data)
+            
+            # 고유값이 전체의 50% 이하이거나 100개 이하면 범주형으로 간주
+            if unique_count <= min(100, total_count * 0.5):
+                distribution_config["columns"].append({
+                    "name": column,
+                    "type": "categorical",
+                    "max_categories": min(100, unique_count + 10)
+                })
+        elif data_type in ["integer", "float"]:
+            # 숫자형 데이터
+            distribution_config["columns"].append({
+                "name": column,
+                "type": "numerical",
+                "auto_bins": True,
+                "bin_count": 10
+            })
+        elif data_type == "boolean":
+            # 불린 데이터를 범주형으로 처리
+            distribution_config["columns"].append({
+                "name": column,
+                "type": "categorical",
+                "max_categories": 5
+            })
+    
+    return distribution_config
 
 
 def _infer_data_type(series):
